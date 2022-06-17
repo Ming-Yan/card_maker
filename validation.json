@@ -1,0 +1,162 @@
+{
+    "emptyBkgBin": {
+        "hc_ee_1_13TeV": [
+            49
+        ],
+        "hc_ee_2_13TeV": [
+            45,
+            47,
+            48,
+            49,
+            50
+        ],
+        "hc_ee_3_13TeV": [
+            1,
+            2
+        ],
+        "hc_emu_1_13TeV": [
+            43,
+            44,
+            45,
+            46,
+            47,
+            49,
+            50
+        ],
+        "hc_emu_2_13TeV": [
+            45,
+            46,
+            47,
+            49,
+            50
+        ],
+        "hc_mumu_1_13TeV": [
+            49,
+            50
+        ],
+        "hc_mumu_2_13TeV": [
+            46,
+            48,
+            49,
+            50
+        ],
+        "hc_mumu_3_13TeV": [
+            1,
+            2
+        ]
+    },
+    "largeNormEff": {
+        "CMS_vvst": {
+            "hc_ee_1_13TeV": {
+                "st": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                },
+                "vv": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                }
+            },
+            "hc_ee_2_13TeV": {
+                "st": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                },
+                "vv": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                }
+            },
+            "hc_ee_3_13TeV": {
+                "st": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                },
+                "vv": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                }
+            },
+            "hc_ee_4_13TeV": {
+                "st": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                },
+                "vv": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                }
+            },
+            "hc_emu_1_13TeV": {
+                "st": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                },
+                "vv": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                }
+            },
+            "hc_emu_2_13TeV": {
+                "st": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                },
+                "vv": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                }
+            },
+            "hc_emu_3_13TeV": {
+                "st": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                },
+                "vv": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                }
+            },
+            "hc_mumu_1_13TeV": {
+                "st": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                },
+                "vv": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                }
+            },
+            "hc_mumu_2_13TeV": {
+                "st": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                },
+                "vv": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                }
+            },
+            "hc_mumu_3_13TeV": {
+                "st": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                },
+                "vv": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                }
+            },
+            "hc_mumu_4_13TeV": {
+                "st": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                },
+                "vv": {
+                    "value_d": 0.0,
+                    "value_u": 1.15
+                }
+            }
+        }
+    }
+}
