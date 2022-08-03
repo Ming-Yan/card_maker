@@ -1,40 +1,67 @@
-import ROOT 
-chn='emu'
+import ROOT
 
-fsr = ROOT.TFile.Open('shape/templates_SR_%s_ll_mass_2017.root' %(chn))
-fsr2 = ROOT.TFile.Open('shape/templates_SR2_%s_ll_mass_2017.root' %(chn))
-histlist= ['hc','data_obs','st','vv','ttbar','vjets']
-hist={}
-hist2={}
-hist_lm={}
-hist2_lm={}
-histcr={}
+for r in range(1, 3):
+    for ch in ["ee", "mumu", "emu"]:
+        c = ROOT.TCanvas("c", "c", 800, 800)
 
+        f = ROOT.TFile.Open("cards/moredy_2017/inputhc_%s_%d_13TeV.root " % (ch, r))
+        histlist = ["hc", "data_obs", "st", "vv", "ttbar", "vjets", "higgs"]
+        hist = {}
+        for h in histlist:
+            hist[h] = f.Get("hc_%s_%d_13TeV/%s" % (ch, r, h))
+        hs = ROOT.THStack("hs", "")
+        # print(type(hist['higgs']))
+        hist["vjets"].SetLineColor(ROOT.TColor.GetColor("#854e99"))
+        hist["ttbar"].SetLineColor(ROOT.TColor.GetColor("#73AF48"))
+        hist["st"].SetLineColor(ROOT.TColor.GetColor("#38A6A5"))
+        hist["vv"].SetLineColor(ROOT.TColor.GetColor("#CC503E"))
+        hist["vjets"].SetFillColor(ROOT.TColor.GetColor("#854e99"))
+        hist["ttbar"].SetFillColor(ROOT.TColor.GetColor("#73AF48"))
+        hist["st"].SetFillColor(ROOT.TColor.GetColor("#38A6A5"))
+        hist["vv"].SetFillColor(ROOT.TColor.GetColor("#CC503E"))
+        hist["hc"].SetLineColor(ROOT.TColor.GetColor("#a6a1a1"))
+        hist["higgs"].SetLineColor(ROOT.TColor.GetColor("#c2a482"))
+        hist["higgs"].SetFillColor(ROOT.TColor.GetColor("#c2a482"))
+        hist["higgs"].SetFillStyle(3)
+        hist["hc"].SetLineWidth(2)
+        hist["data_obs"].SetLineColor(1)
+        hist["data_obs"].SetMarkerColor(1)
+        hist["data_obs"].SetMarkerStyle(20)
+        for nbin in range(
+            hist["data_obs"].GetNbinsX() - 9, hist["data_obs"].GetNbinsX() + 1
+        ):
+            hist["data_obs"].SetBinContent(nbin, 0)
+        hs.Add(hist["vjets"])
+        hs.Add(hist["ttbar"])
+        hs.Add(hist["st"])
+        hs.Add(hist["vv"])
+        hs.Add(hist["higgs"])
 
+        hs.SetMaximum(25000)
+        hs.SetMinimum(0.1)
+        hs.Draw("hist")
+        hist["data_obs"].Draw("epsame")
+        l = ROOT.TLegend(0.5, 0.6, 0.9, 0.9)
+        l.SetNColumns(2)
+        l.AddEntry(hist["st"], "ST", "f")
+        l.AddEntry(hist["vv"], "VV", "f")
+        l.AddEntry(hist["vjets"], "V+jets", "f")
+        l.AddEntry(hist["ttbar"], "t#bar{t}", "f")
+        l.AddEntry(hist["higgs"], "higgs#times500", "f")
+        l.AddEntry(hist["hc"], "signal#times50000", "l")
+        l.AddEntry(hist["data_obs"], "data", "ep")
+        l.SetTextSize(0.05)
+        hr = ROOT.TRatioPlot(hs, hist["data_obs"])
+        hr.Draw("ep")
+        hr.GetLowerRefYaxis().SetRangeUser(0.5, 1.5)
+        hr.GetLowerRefYaxis().SetNdivisions(505)
+        pu = hr.GetUpperPad()
+        pu.cd()
+        pu.SetLogy()
+        hist["hc"].Scale(50000)
+        hist["higgs"].Scale(500)
+        hist["hc"].Draw("histsame")
+        hist["higgs"].Draw("histsame")
 
-for h in histlist:  
-    hist[h] = fsr.Get(h)
-    hist2[h] = fsr2.Get(h)
-    hist_lm[h] = ROOT.TH1F(h,h,13,0,78)
-    hist2_lm[h] = ROOT.TH1F(h,h,13,0,78)
-    histcr[h] = ROOT.TH1F(h,h,37,78,300)
-    for b in range(50):
-        if b < 13:
-            hist_lm[h].SetBinContent(b+1,hist[h].GetBinContent(b+1))
-            hist2_lm[h].SetBinContent(b+1,hist2[h].GetBinContent(b+1))
-        else:histcr[h].SetBinContent(b+1-13,hist2[h].GetBinContent(b+1)+hist[h].GetBinContent(b+1))
-    # hist_lm[h].Rebin(2)
-
-fsr_lm = ROOT.TFile.Open('shape/templates_SR_LM_%s_ll_mass_2017.root' %(chn), "recreate")
-fsr_lm.cd() 
-for  h in histlist: hist_lm[h].Write()
-fsr_lm.Close()
-fsr2_lm = ROOT.TFile.Open('shape/templates_SR2_LM_%s_ll_mass_2017.root' %(chn), "recreate")
-fsr2_lm.cd()    
-for  h in histlist: hist2_lm[h].Write()
-fsr2_lm.Close()
-fscr_lm = ROOT.TFile.Open('shape/templates_HM_CR_%s_ll_mass_2017.root' %(chn), "recreate")
-fscr_lm.cd()    
-for  h in histlist:histcr[h].Write()
-fscr_lm.Close()
-    
+        l.Draw()
+        c.Print("plot/%d_%s_dymore.pdf" % (r, ch))
