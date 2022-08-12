@@ -3,7 +3,7 @@ import numpy as np
 import os
 import argparse
 import json
-
+from systematics import AddCommonSystematics,AddSystematics2017
 cb = ch.CombineHarvester()
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -47,51 +47,52 @@ with open(args.input) as json_file:
     input_map = json.load(json_file)
     input_map = input_map[args.version]
 for chn in chns:
-    if args.chn != "all" and args.chn != chn:
-        continue
+    if args.chn != chn: continue
 
     cb.AddObservations(["*"], ["hc"], ["13TeV"], [chn], cats[chn])
     cb.AddProcesses(["*"], ["hc"], ["13TeV"], [chn], bkg_proc, cats[chn], False)
     cb.AddProcesses(["*"], ["hc"], ["13TeV"], [chn], sig_proc, cats[chn], True)
 
     ## read shapes
-    i = 1
+    
     for region in regions.keys():
 
         file = "shape/templates_%s_%s_%s.root" % (region, chn, input_map[region])
-        if region == "top_CR" and chn == "emu":file = "shape/templates_top_CR_emu_jetflav_btagDeepFlavCvB_2017.root"
         file = str(file)
-        
-        # cb.cp().channel([chn]).signals().bin_id([regions[region]]).ExtractShapes(
-            # file, "$PROCESS", "$PROCESS_$SYSTEMATIC"
-        # )
-        # cb.cp().channel([chn]).backgrounds().bin_id([regions[region]]).ExtractShapes(
-        #     file, "$PROCESS", "$PROCESS_$SYSTEMATIC"
-        # )
+        # AddCommonSystematics(cb)
+        # AddSystematics2017(cb,chn)
         cb.cp().channel([chn]).signals().bin_id([regions[region]]).ExtractShapes(
-            file, "$PROCESS", "$PROCESS"
+            file, "$PROCESS", "$SYSTEMATIC"
         )
         cb.cp().channel([chn]).backgrounds().bin_id([regions[region]]).ExtractShapes(
-            file, "$PROCESS", "$PROCESS"
+            file, "$PROCESS", "$SYSTEMATIC"
         )
-        cb.cp().AddSyst(cb,'lumi_13TeV','lnN', ch.SystMap()(1.023))
         
-        cb.cp().process(['st','vv']).AddSyst(cb,'CMS_vvst','lnN',ch.SystMap()(1.15))
-        cb.cp().process(['ttbar']).AddSyst(cb,'CMS_ttbar','lnN',ch.SystMap()(1.005))
-        cb.cp().process(['vjets']).AddSyst(cb,'CMS_vjet','lnN',ch.SystMap()(1.05))
-        cb.cp().channel([chn]).process(['ttbar']).AddSyst(cb, 'SF_tt_%s' %(chn),'rateParam',ch.SystMap()(1.0))
-        cb.GetParameter('SF_tt_%s' %(chn)).set_range(0.0,5.0)
-        if ch != 'emu' :
-            cb.cp().channel([chn]).process(['vjets']).AddSyst(cb, 'SF_vjets_%s' %(chn),'rateParam',ch.SystMap()(1.0))
-        cb.GetParameter('SF_vjets_%s' %(chn)).set_range(0.0,5.0)
-        rebin = (
-            ch.AutoRebin()
-            .SetBinThreshold(1.0)
-            .SetRebinMode(1)
-            .SetPerformRebin(True)
-            .SetVerbosity(1)
-        )
-        rebin.Rebin(cb, cb)
+        # cb.cp().channel([chn]).signals().bin_id([regions[region]]).ExtractShapes(
+        #     file, "$PROCESS", "$PROCESS"
+        # )
+        # cb.cp().channel([chn]).backgrounds().bin_id([regions[region]]).ExtractShapes(
+        #     file, "$PROCESS", "$PROCESS"
+        # )
+        # cb.cp().AddSyst(cb,'lumi_13TeV','lnN', ch.SystMap()(1.023))
+        
+        # cb.cp().process(['st','vv']).AddSyst(cb,'CMS_vvst','lnN',ch.SystMap()(1.15))
+        # cb.cp().process(['ttbar']).AddSyst(cb,'CMS_ttbar','lnN',ch.SystMap()(1.005))
+        # cb.cp().process(['vjets']).AddSyst(cb,'CMS_vjet','lnN',ch.SystMap()(1.05))
+        # cb.cp().channel([chn]).process(['ttbar']).AddSyst(cb, 'SF_tt_%s' %(chn),'rateParam',ch.SystMap()(1.0))
+        # cb.GetParameter('SF_tt_%s' %(chn)).set_range(0.0,5.0)
+        # if ch != 'emu' :
+        #     cb.cp().channel([chn]).process(['vjets']).AddSyst(cb, 'SF_vjets_%s' %(chn),'rateParam',ch.SystMap()(1.0))
+        # cb.GetParameter('SF_vjets_%s' %(chn)).set_range(0.0,5.0)
+
+        # rebin = (
+        #     ch.AutoRebin()
+        #     .SetBinThreshold(1.0)
+        #     .SetRebinMode(1)
+        #     .SetPerformRebin(True)
+        #     .SetVerbosity(1)
+        # )
+        # rebin.Rebin(cb, cb)
         # i=i+1
 
 ch.SetStandardBinNames(cb)
