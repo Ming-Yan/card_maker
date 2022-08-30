@@ -57,11 +57,41 @@
         "SR":"srbdt_2017_dymore",
         "SR2":"srbdt_2017_dymore"
     },
-    "syst":
+    "nosyst":
     {
 	"DY_CR":"template_ll_mass_2017",
         "top_CR":"template_mT1_2017",
         "SR":"template_BDT_2017",
         "SR2":"template_BDT_2017"
+    },   
+    "common_syst":
+    {
+	"DY_CR":"template_ll_mass_2017",
+        "top_CR":"template_mT1_2017",
+        "SR":"template_BDT_2017",
+        "SR2":"template_BDT_2017"
+    }   ,
+
+
+    "corrsyst":
+    {
+	"DY_CR":"template_ll_mass_2017_correct",
+        "top_CR":"template_mT1_2017_correct",
+        "SR":"template_BDT_2017_correct",
+        "SR2":"template_BDT_2017_correct"
+    }   ,
+    "mergell":
+    {
+	"DY_CR":"template_ll_mass_2017_correct",
+        "top_CR":"template_mT1_2017_correct",
+        "SR":"template_BDT_2017_correct",
+        "SR2":"template_BDT_2017_correct"
+    },
+    "top_CR":
+    {
+	"DY_CR":"template_ll_mass_2017_correct",
+        "top_CR":"template_llbb_mass_2017_correct",
+        "SR":"template_BDT_2017_correct",
+        "SR2":"template_BDT_2017_correct"
     }   
 }
