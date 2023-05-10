@@ -1,0 +1,13 @@
+*.coffea
+*.pyc
+*.*~
+\#*
+.ipynb_checkpoints/
+*.pdf
+*.png
+*.root.dot
+*.root
+*.txt
+__pycache__
+.vscode/
+

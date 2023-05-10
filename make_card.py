@@ -3,23 +3,19 @@ import numpy as np
 import os
 import argparse
 import json
-from systematics import AddCommonSystematics,AddSystematics2017
+from systematics import AddCommonSystematics,AddSystematics2017,AddSystematics2018,AddSystematics2016_postVFP,AddSystematics2016_preVFP,group_nuisances
 cb = ch.CombineHarvester()
 parser = argparse.ArgumentParser()
 parser.add_argument(
-    "-o",
-    "--output_folder",
-    default="H+c_cards",
-    help="""Subdirectory of ./output/ where the cards are written out to""",
-)
-parser.add_argument(
     "--year",
     default="2017",
+    required=True,
+    choices=["2016_preVFP", "2016_postVFP", "2017", "2018"],
     help="""Year to produce datacards for (2018, 2017 or 2016)""",
 )
-parser.add_argument(
-    "-i", "--input", type=str, required=True, help="observable to the fit"
-)
+# parser.add_argument(
+#     "-i", "--input", type=str, required=True, help="input shape file"
+# )
 parser.add_argument(
     "-ch",
     "--chn",
@@ -29,24 +25,26 @@ parser.add_argument(
     help="channel",
 )
 parser.add_argument("-v", "--version", type=str, required=True, help="version")
-
+parser.add_argument("--doshape",action="store_true", default = False,help="run shape uncertainties")
+parser.add_argument("--groupunc", choices = ["split","versions","sys_combine"],help="run shape uncertainties")
+parser.add_argument("--noMCstat",action="store_true", default = False,help="No MC statistical uncertainty")
+parser.add_argument("--splitJEC",action="store_true", default = False,help="split JEC into 11 sources")
+parser.add_argument("--combine_cards",action="store_true", default = False,help="run shape uncertainties")
 args = parser.parse_args()
 shapes = os.getcwd()
-mass = ["125"]
 
-regions = {"SR": 1, "SR2": 2, "DY_CR": 4, "top_CR": 3}
 year = args.year
-bkg_proc = ["st", "vv", "vjets", "ttbar", "higgs"]
+bkg_proc = ["st", "vv", "zjets", "ttbar", "higgs"]
 sig_proc = ["hc"]
-cats = {
-    "ee": [(1, "SR"), (2, "SR2"), (3, "top_CR"), (4, "DY_CR")],  # ,(5,'HM_CR')],
-    "mumu": [(1, "SR"), (2, "SR2"), (3, "top_CR"), (4, "DY_CR")],  # ,(5,'HM_CR')],
-    "emu": [(1, "SR"), (2, "SR2"), (3, "top_CR")],  # ,(5,'HM_CR')],
-}
-with open(args.input) as json_file:
+cats,regions={},{}
+with open("shapemap.json") as json_file:
     input_map = json.load(json_file)
     input_map = input_map[args.version]
 
+cats[args.chn]=[]
+for i,r in enumerate(input_map.keys(),1):
+    regions[r] = i
+    cats[args.chn].append(tuple([i,str(r)]))
 
 cb.AddObservations(["*"], ["hc"], ["13TeV"], [args.chn], cats[args.chn])
 cb.AddProcesses(["*"], ["hc"], ["13TeV"], [args.chn], bkg_proc, cats[args.chn], False)
@@ -55,18 +53,20 @@ cb.AddProcesses(["*"], ["hc"], ["13TeV"], [args.chn], sig_proc, cats[args.chn], 
 ## read shapes
 
 for region in regions.keys():
-
-    file = "shape/templates_%s_%s_%s.root" % (region, args.chn, input_map[region])
+    print(region)
+    file = "shape/%s.root" % (input_map[region])#(region, args.chn, input_map[region])
     file = str(file)
-    AddCommonSystematics(cb)
-    AddSystematics2017(cb,args.chn)
+    AddCommonSystematics(cb,doshape=args.doshape)
+    if year=="2016_preVFP": AddSystematics2016_preVFP(cb,args.chn,doshape=args.doshape,splitJEC=args.splitJEC)
+    if year=="2016_postVFP": AddSystematics2016_postVFP(cb,args.chn,doshape=args.doshape,splitJEC=args.splitJEC)
+    if year=="2017": AddSystematics2017(cb,args.chn,doshape=args.doshape,splitJEC=args.splitJEC)
+    if year=="2018": AddSystematics2018(cb,args.chn,doshape=args.doshape,splitJEC=args.splitJEC)
     cb.cp().channel([args.chn]).signals().bin_id([regions[region]]).ExtractShapes(
         file, "$PROCESS", "$PROCESS_$SYSTEMATIC"
     )
     cb.cp().channel([args.chn]).backgrounds().bin_id([regions[region]]).ExtractShapes(
         file, "$PROCESS", "$PROCESS_$SYSTEMATIC"
     )
-    
     rebin = (
         ch.AutoRebin()
         .SetBinThreshold(1.0)
@@ -82,21 +82,8 @@ ch.SetStandardBinNames(cb)
 
 
 
-cb.AddDatacardLineAtEnd("* autoMCStats 0")
-cb.AddDatacardLineAtEnd("theory_sig group = CMS_hc CMS_higgs CMS_Br_HWW_theo CMS_Br_HWW_mq CMS_Br_HWW_alphas")
-cb.AddDatacardLineAtEnd("theory_bkg group = CMS_vvst CMS_ttbar CMS_vjet")
-cb.AddDatacardLineAtEnd("theory_shape group = CMS_scalevar_3pt CMS_UEPS_FSR CMS_UEPS_ISR  CMS_aS_weight CMS_PDF_weight")
-cb.AddDatacardLineAtEnd("log group = lumi_13TeV_2017 lumi_13TeV_1718 lumi_13TeV_correlated")
-
-if args.chn=='emu' : 
-    cb.AddDatacardLineAtEnd("rateparam group = CMS_SF_tt_emu_13TeV_2017")
-    cb.AddDatacardLineAtEnd("shape_exp group = CMS_eleSFs_13TeV_2017 CMS_muSFs_13TeV_2017 CMS_L1prefireweight CMS_puweight_13TeV_2017 CMS_cjetSFs_13TeV_2017")
-else : 
-    cb.AddDatacardLineAtEnd("rateparam group = CMS_SF_tt_ll_13TeV_2017 CMS_SF_vjets_ll_13TeV_2017" )#%(args.chn,args.chn))
-    if args.chn == 'ee':cb.AddDatacardLineAtEnd("shape_exp group = CMS_eleSFs_13TeV_2017 CMS_L1prefireweight CMS_puweight_13TeV_2017 CMS_cjetSFs_13TeV_2017")
-    else :cb.AddDatacardLineAtEnd("shape_exp group = CMS_muSFs_13TeV_2017 CMS_L1prefireweight CMS_puweight_13TeV_2017 CMS_cjetSFs_13TeV_2017")
-
-cb.AddDatacardLineAtEnd("shape_JER group = CMS_UES_13TeV_2017 CMS_JES_13TeV_2017 CMS_JER_13TeV_2017")
+if not args.noMCstat:cb.AddDatacardLineAtEnd("* autoMCStats 0")
+group_nuisances(cb,year,scheme=args.groupunc,splitJEC=args.splitJEC)
 writer = ch.CardWriter(
     "cards/" + args.version + "_" + args.year + "/$BIN" + ".txt",
     "cards/" + args.version + "_" + args.year + "/input$BIN" + ".root",
@@ -104,11 +91,21 @@ writer = ch.CardWriter(
 writer.SetWildcardMasses([])
 writer.WriteCards(args.chn, cb.cp().channel([args.chn]))
 
-cb.cp().mass("*").WriteDatacard(
-    "cards/" + args.version + "_" + args.year + "/combine" + args.chn + ".txt",
-    "cards/" + args.version + "_" + args.year + "/combineinput" + args.chn + ".root",
-)
 
+if args.combine_cards:
+    
+    dict_cat = {v: k for k, v in dict(cats[args.chn]).items()}
+    combine_format={
+        "SR_LM_comb":["SR2_LM","SR_LM"],
+        "SR":["SR2_LM","SR_LM","SR_HM"],
+        "all":["SR2_LM","SR_LM","SR_HM",'top_CR_lowmT'],
+    }
+    for comb in combine_format:
+        commands="combineCards.py "
+        for card in combine_format[comb]:
+            commands=commands+(card+"=cards/"+args.version+"_"+str(args.year)+"/hc_"+args.chn+"_"+str(dict_cat[card])+"_13TeV.txt ")
+        commands=commands+" >cards/"+args.version+"_"+str(args.year)+"/hc_"+args.chn+"_"+comb+"_13TeV.txt"
+        os.system(commands)
 
 
 

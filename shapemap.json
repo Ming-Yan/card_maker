@@ -1,0 +1,164 @@
+{
+"splitsys_PU":
+{
+    "SR":"template_BDT_2017_PU",
+    "SR2":"template_BDT_2017_PU",
+    "DY_CR":"template_ll_mass_2017_PU",
+    "top_CR":"template_mT1_2017_PU"
+},
+"newBDT_2class":
+{
+    "SR_LM":"2class_LM_BDT_emu_0403",
+    "SR_HM":"2class_HM_BDT_emu_0403",
+    "top_CR":"top_CR_emu_0403",
+    "top_CR_lowmT":"top_CR_lowmT_emu_0403"
+},
+
+"newBDT_3class":
+{
+    "SR_LM_hc":"3class_LM_BDT_emu_0403_classH+c",
+    "SR_LM_higgs":"3class_LM_BDT_emu_0403_classHWW",
+    "SR_LM_bkg":"3class_LM_BDT_emu_0403_classBkg",
+    "SR_HM":"3class_HM_BDT_emu_0403",
+    "top_CR":"top_CR_emu_0403",
+    "top_CR_lowmT":"top_CR_lowmT_emu_0403"
+},
+"newBDT_2class_wide_2j":
+{
+    "SR_LM":"2class_SR_LM_BDT_emu_0403_wide",
+    "SR2_LM":"2class_SR2_LM_BDT_emu_0403_wide",
+    "SR_HM":"2class_HM_BDT_emu_0403_wide",
+    "top_CR":"top_CR_emu_0403_new",
+    "top_CR_lowmT":"top_CR_lowmT_emu_0403_new"
+
+},
+
+"newvar_2class_wide_2j":
+{
+    "SR_LM_sep":"2class_SR_LM_BDT_emu_0413_wide",
+    "SR2_LM_sep":"2class_SR2_LM_BDT_emu_0413_wide",
+    "SR_HM":"2class_SR_HM_BDT_emu_0413_wide",
+    "top_CR":"top_CR_emu_0403_new",
+    "top_CR_lowmT":"top_CR_lowmT_emu_0403_new"
+
+},
+
+"fixbdt_2class_wide_2j":
+{
+    "SR_LM_sep":"2class_SR_LM_BDT_emu_0418_wide",
+    "SR2_LM_sep":"2class_SR2_LM_BDT_emu_0418_wide",
+    "SR_HM":"2class_SR_HM_BDT_emu_0418_wide",
+    "top_CR":"top_CR_emu_0403_new",
+    "top_CR_lowmT":"top_CR_lowmT_emu_0403_new"
+
+},
+"fixbdt_unc_2class_wide_2j":
+{
+    "SR_LM_sep":"2class_SR_LM_BDT_emu_0418_wide",
+    "SR2_LM_sep":"2class_SR2_LM_BDT_emu_0418_wide",
+    "SR_HM":"2class_SR_HM_BDT_emu_0418_wide",
+    "top_CR":"top_CR_emu_0403_new",
+    "top_CR_lowmT":"top_CR_lowmT_emu_0403_new"
+
+},
+
+
+    "rebin_2class_2j":
+{
+    "SR_LM_sep":"2class_SR_LM_BDT_emu_0418_rebin",
+    "SR2_LM_sep":"2class_SR2_LM_BDT_emu_0418_rebin",
+    "SR_HM":"2class_SR_HM_BDT_emu_0418_wide",
+    "top_CR":"top_CR_emu_0403_new",
+    "top_CR_lowmT":"top_CR_lowmT_emu_0403_new"
+
+},
+
+"newBDT_2class_wide":
+{
+    "SR_LM":"2class_LM_BDT_emu_0403_wide",
+    "SR_HM":"2class_HM_BDT_emu_0403_wide",
+    "top_CR":"top_CR_emu_0403_new",
+    "top_CR_lowmT":"top_CR_lowmT_emu_0403_new"
+},
+"newBDT_2class_old_def":
+{
+    "top_CR":"top_CR_emu_0403_new",
+    "top_CR_lowmT":"top_CR_lowmT_emu_0403_new",
+    "SR2":"2class_SR2_BDT_emu_0403_wide",
+    "SR":"2class_SR_BDT_emu_0403_wide"
+},
+"newBDT_3class_wide":
+{
+    "SR_LM_hc":"3class_LM_BDT_emu_0403_classH+c_wide",
+    "SR_LM_higgs":"3class_LM_BDT_emu_0403_classHWW_wide",
+    "SR_LM_bkg":"3class_LM_BDT_emu_0403_classBkg_wide",
+    "SR_HM":"3class_HM_BDT_emu_0403_wide",
+    "top_CR":"top_CR_emu_0403_new",
+    "top_CR_lowmT":"top_CR_lowmT_emu_0403_new"
+},
+"newBDT_3class_wide_2j":
+{
+    "SR_LM_hc":"3class_SR_LM_BDT_emu_0403_classH+c_wide",
+    "SR_LM_higgs":"3class_SR_LM_BDT_emu_0403_classHWW_wide",
+    "SR_LM_bkg":"3class_SR_LM_BDT_emu_0403_classBkg_wide",
+    "SR2_LM_hc":"3class_SR2_LM_BDT_emu_0403_classH+c_wide",
+    "SR2_LM_higgs":"3class_SR2_LM_BDT_emu_0403_classHWW_wide",
+    "SR2_LM_bkg":"3class_SR2_LM_BDT_emu_0403_classBkg_wide",
+    "SR_HM":"3class_HM_BDT_emu_0403_wide",
+    "top_CR":"top_CR_emu_0403_new",
+    "top_CR_lowmT":"top_CR_lowmT_emu_0403_new"
+},
+"newBDT_3class_old_def":
+{
+    "SR2_hc":"3class_SR2_BDT_emu_0403_classH+c_wide",
+    "SR2_higgs":"3class_SR2_BDT_emu_0403_classHWW_wide",
+    "SR2_bkg":"3class_SR2_BDT_emu_0403_classBkg_wide",
+    "SR_hc":"3class_SR_BDT_emu_0403_classH+c_wide",
+    "SR_higgs":"3class_SR_BDT_emu_0403_classHWW_wide",
+    "SR_bkg":"3class_SR_BDT_emu_0403_classBkg_wide",
+    "top_CR":"top_CR_emu_0403_new",
+    "top_CR_lowmT":"top_CR_lowmT_emu_0403_new"
+},
+    "UL2017_0428":
+    {
+	"SR_LM":"SR_LM_template_BDT_SR_LM_0428",
+	"SR2_LM":"SR2_LM_template_BDT_SR2_LM_0428",
+	"SR_HM":"SR_HM_template_BDT_SR_HM_0428",
+	"top_CR_lowmT":"top_CR_lowmT_template_mTh_0428"},
+    "UL2017_0502_fixReco":
+    {
+	"SR_LM":"SR_LM_template_BDT_SR_LM_0502_fixReco",
+	"SR2_LM":"SR2_LM_template_BDT_SR2_LM_0502_fixReco",
+	"SR_HM":"SR_HM_template_BDT_SR_HM_0502_fixReco",
+	"top_CR_lowmT":"top_CR_lowmT_template_mTh_0502_fixReco"},
+    "2017_0507_splitJEC":
+    {
+	"SR_LM":"2017_SR_LM_template_BDT_SR_LM_0507_splitJEC",
+	"SR2_LM":"2017_SR2_LM_template_BDT_SR2_LM_0507_splitJEC",
+	"SR_HM":"2017_SR_HM_template_BDT_SR_HM_0507_splitJEC",
+	"top_CR_lowmT":"2017_top_CR_lowmT_template_mTh_0507_splitJEC"},
+    "2018_0507_splitJEC":
+    {
+	"SR_LM":"2018_SR_LM_template_BDT_SR_LM_0507_splitJEC",
+	"SR2_LM":"2018_SR2_LM_template_BDT_SR2_LM_0507_splitJEC",
+	"SR_HM":"2018_SR_HM_template_BDT_SR_HM_0507_splitJEC",
+	"top_CR_lowmT":"2018_top_CR_lowmT_template_mTh_0507_splitJEC"},
+    "2016_postVFP_0507_splitJEC":
+    {
+	"SR_LM":"2016_postVFP_SR_LM_template_BDT_SR_LM_0507_splitJEC",
+	"SR2_LM":"2016_postVFP_SR2_LM_template_BDT_SR2_LM_0507_splitJEC",
+	"SR_HM":"2016_postVFP_SR_HM_template_BDT_SR_HM_0507_splitJEC",
+	"top_CR_lowmT":"2016_postVFP_top_CR_lowmT_template_mTh_0507_splitJEC"},
+    "2016_preVFP_0507_splitJEC":
+    {
+	"SR_LM":"2016_preVFP_SR_LM_template_BDT_SR_LM_0507_splitJEC",
+	"SR2_LM":"2016_preVFP_SR2_LM_template_BDT_SR2_LM_0507_splitJEC",
+	"SR_HM":"2016_preVFP_SR_HM_template_BDT_SR_HM_0507_splitJEC",
+	"top_CR_lowmT":"2016_preVFP_top_CR_lowmT_template_mTh_0507_splitJEC"},
+    
+    "UL2017_0428_noshape":
+    {
+	"SR_LM":"SR_LM_template_BDT_SR_LM_0428",
+	"SR2_LM":"SR2_LM_template_BDT_SR2_LM_0428",
+	"SR_HM":"SR_HM_template_BDT_SR_HM_0428",
+	"top_CR_lowmT":"top_CR_lowmT_template_mTh_0428"}}
