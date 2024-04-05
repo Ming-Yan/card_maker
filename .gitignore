@@ -2,6 +2,8 @@
 *.pyc
 *.*~
 \#*
+cards/*
+shape/*
 .ipynb_checkpoints/
 *.pdf
 *.png
